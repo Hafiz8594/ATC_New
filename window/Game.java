@@ -109,7 +109,7 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         for(int i = 0; i < handler.object.size(); i++){
-            if(handler.object.get(i).getId() == ObjectId.Player)
+            if(handler.object.get(i).getId() == ObjectId.Plane) // Changed from 'Player' to plane
               cam.tick(handler.object.get(i));  
         }
     }

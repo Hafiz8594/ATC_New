@@ -9,5 +9,6 @@ public enum ObjectId
     Player(),
     Test(),
     Block(),
-    Flag();
+    Flag(),
+    Plane();
 }

@@ -28,10 +28,12 @@ public class KeyInput extends KeyAdapter {
             GameObject tempObject = handler.object.get(i);
             
             // Checks if certain object is a player
-            if(tempObject.getId() == ObjectId.Player)
+            if(tempObject.getId() == ObjectId.Plane)
             {
-                if(key == KeyEvent.VK_D) tempObject.setVelX(5);
-                if(key == KeyEvent.VK_A) tempObject.setVelX(-5);
+                if(key == KeyEvent.VK_RIGHT) tempObject.setVelX(5);
+                if(key == KeyEvent.VK_LEFT) tempObject.setVelX(-5);
+                if(key == KeyEvent.VK_UP) tempObject.setVelY(-5);
+                if(key == KeyEvent.VK_DOWN) tempObject.setVelY(5);
                 if(key == KeyEvent.VK_SPACE && !tempObject.isJumping())
                 {
                     tempObject.setJumping(true);
@@ -54,9 +56,11 @@ public class KeyInput extends KeyAdapter {
             GameObject tempObject = handler.object.get(i);
             
             // Checks if certain object is a player
-            if(tempObject.getId() == ObjectId.Player){
-                if(key == KeyEvent.VK_D) tempObject.setVelX(0);
-                if(key == KeyEvent.VK_A) tempObject.setVelX(0);
+            if(tempObject.getId() == ObjectId.Plane){
+                if(key == KeyEvent.VK_RIGHT) tempObject.setVelX(0);
+                if(key == KeyEvent.VK_LEFT) tempObject.setVelX(0);
+                if(key == KeyEvent.VK_UP) tempObject.setVelY(0);
+                if(key == KeyEvent.VK_DOWN) tempObject.setVelY(0);
             }
         }
     }

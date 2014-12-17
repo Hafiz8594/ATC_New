@@ -4,6 +4,7 @@ import ats.framework.GameObject;
 import ats.framework.ObjectId;
 import ats.objects.Block;
 import ats.objects.Flag;
+import ats.objects.Plane;
 import ats.objects.Player;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -64,8 +65,8 @@ public class Handler {
                 if(red == 255 & green == 255 && blue == 255) // Checks for blocks
                     addObject(new Block(xx*32, yy*32, 0, ObjectId.Block));
                 if(red == 0 & green == 38 && blue == 255) // Checks for player
-                    addObject(new Player(xx*32, yy*32, this, cam, ObjectId.Player));
-                if(red == 255 & green == 216 && blue == 0) // Checks for player
+                    addObject(new Plane(xx*32, yy*32, this, cam, ObjectId.Plane));
+                if(red == 255 & green == 216 && blue == 0) // Checks for Flag
                     addObject(new Flag(xx*32, yy*32, ObjectId.Flag));
             }
         }
