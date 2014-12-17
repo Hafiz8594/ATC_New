@@ -10,5 +10,7 @@ public enum ObjectId
     Test(),
     Block(),
     Flag(),
-    Plane();
+    Plane(),
+    Flyer(),
+    Storm();
 }

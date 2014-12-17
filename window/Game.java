@@ -9,6 +9,7 @@ import ats.objects.Flag;
 import ats.objects.Player;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,6 +24,12 @@ public class Game extends Canvas implements Runnable {
 
     private boolean running = false;
     private Thread thread;
+    
+
+    @Override
+    public Dimension size() {
+        return super.size(); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public static int WIDTH, HEIGHT;
     
@@ -108,9 +115,9 @@ public class Game extends Canvas implements Runnable {
     
     private void tick() {
         handler.tick();
-        for(int i = 0; i < handler.object.size(); i++){
-            if(handler.object.get(i).getId() == ObjectId.Plane) // Changed from 'Player' to plane
-              cam.tick(handler.object.get(i));  
+        for(int i = 0; i < handler.objects.size(); i++){
+            if(handler.objects.get(i).getId() == ObjectId.Plane) // Changed from 'Player' to plane
+              cam.tick(handler.objects.get(i));
         }
     }
     private void render() 
@@ -132,7 +139,7 @@ public class Game extends Canvas implements Runnable {
         //g.drawImage(clouds, 0, 0, this); // Static Clouds
         
         g2d.translate(cam.getX(), cam.getY()); // begin of cam
-        for(int xx = 0; xx < clouds.getWidth() * 3; xx += clouds.getWidth()){ // Moving clouds
+        for(int xx = 0; xx < clouds.getWidth() * 100; xx += clouds.getWidth()){ // Moving clouds
             g.drawImage(clouds, xx, 0, this);
         }
         handler.render(g);
@@ -145,14 +152,12 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
     
-
-    
     public static Texture getInstance(){
         return tex;
     }
     
-    public static void main(String[] args) {
-        new Window(800, 600, "ATS Prototype", new Game());
-    }
+//    public static void main(String[] args) {
+//        new Window(800, 600, "ATS Prototype", new Game());
+//    }
     
 }

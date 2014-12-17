@@ -11,17 +11,22 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Hafiz
  */
 public class Plane extends GameObject {
+    
+    JFrame frame;
 
     private float width = 251, height = 106;
     
     private float gravity = 0f;
-    private final float MAX_SPEED = 10;
+    private final float MAX_SPEED = 50;
+    private boolean isMovingForward = false;
     
     private Handler handler;
     private Camera cam;
@@ -30,8 +35,14 @@ public class Plane extends GameObject {
     
     public Plane(float x, float y, Handler handler, Camera cam, ObjectId id){
         super(x, y, id);
+        this.setVelX(8f);
         this.handler = handler;
         this.cam = cam;
+        frame = new JFrame("Lesson");
+    }
+    
+    public void setMotion(boolean b){
+        this.isMovingForward = b;
     }
     
     @Override
@@ -45,12 +56,21 @@ public class Plane extends GameObject {
             if(velY > MAX_SPEED)
                 velY = MAX_SPEED;
         }
+        
         Collision(object);
     }
     
+    public void increaseSpeed(){
+        velX += 1;
+    }
+    
+    public void decreaseSpeed(){
+        velX -= 1;
+    }
+    
     private void Collision(LinkedList<GameObject> object){
-        for(int i = 0; i < handler.object.size(); i++){
-            GameObject tempObject = handler.object.get(i);
+        for(int i = 0; i < handler.objects.size(); i++){
+            GameObject tempObject = handler.objects.get(i);
             
             if(tempObject.getId() == ObjectId.Block)
             {
@@ -79,6 +99,7 @@ public class Plane extends GameObject {
             } else if(tempObject.getId() == ObjectId.Flag){
                 // Switch level (Or in our case, level has endeed)
                 if(getBounds().intersects(tempObject.getBounds())){
+                    JOptionPane.showMessageDialog(frame, "Lesson Completed!");
                     handler.switchLevel();
                 }
             }

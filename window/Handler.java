@@ -2,10 +2,7 @@ package ats.window;
 
 import ats.framework.GameObject;
 import ats.framework.ObjectId;
-import ats.objects.Block;
-import ats.objects.Flag;
-import ats.objects.Plane;
-import ats.objects.Player;
+import ats.objects.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
@@ -16,7 +13,7 @@ import java.util.LinkedList;
  */
 public class Handler {
     
-    public LinkedList<GameObject> object = new LinkedList<GameObject>();
+    public LinkedList<GameObject> objects = new LinkedList<GameObject>();
     
     private GameObject tempObject;
     
@@ -33,18 +30,18 @@ public class Handler {
     
     public void tick()
     {
-        for(int i = 0; i < object.size(); i++)
+        for(int i = 0; i < objects.size(); i++)
         {
-            tempObject = object.get(i);
-            tempObject.tick(object);
+            tempObject = objects.get(i);
+            tempObject.tick(objects);
         }
     }
     
     public void render(Graphics g)
     {
-        for(int i = 0; i < object.size(); i++)
+        for(int i = 0; i < objects.size(); i++)
         {
-            tempObject = object.get(i);
+            tempObject = objects.get(i);
             tempObject.render(g);
         }
     }
@@ -62,10 +59,14 @@ public class Handler {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
                 
-                if(red == 255 & green == 255 && blue == 255) // Checks for blocks
-                    addObject(new Block(xx*32, yy*32, 0, ObjectId.Block));
-                if(red == 0 & green == 38 && blue == 255) // Checks for player
+//                if(red == 255 & green == 255 && blue == 255) // Checks for blocks
+//                    addObject(new Block(xx*32, (yy+200)*32, 0, ObjectId.Block));
+                if(red == 0 & green == 38 && blue == 255) // Checks for plane
                     addObject(new Plane(xx*32, yy*32, this, cam, ObjectId.Plane));
+                if(red == 255 & green == 0 && blue == 110) // Checks for Flyer
+                    addObject(new Flyer(xx*32, yy*32, this, cam, ObjectId.Flyer));
+                if(red == 255 & green == 106 && blue == 0) // Checks for Storm
+                    addObject(new Storm(xx*32, yy*32, this, cam, ObjectId.Storm));
                 if(red == 255 & green == 216 && blue == 0) // Checks for Flag
                     addObject(new Flag(xx*32, yy*32, ObjectId.Flag));
             }
@@ -87,15 +88,15 @@ public class Handler {
     }
     
     private void clearLevel(){
-        object.clear();
+        objects.clear();
     }
     
     public void addObject(GameObject object){
-        this.object.add(object);
+        this.objects.add(object);
     }
     
     public void removeObject(GameObject object){
-        this.object.remove(object);
+        this.objects.remove(object);
     }
     
     /**

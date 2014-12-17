@@ -9,22 +9,28 @@ import java.awt.image.BufferedImage;
  */
 public class Texture {
     
-    SpriteSheet bs, ps, as;
+    SpriteSheet bs, ps, as, fs, ss;
     private BufferedImage block_sheet = null;
     private BufferedImage player_sheet = null;
     private BufferedImage plane_sheet = null;
+    private BufferedImage flyer_sheet = null;
+    private BufferedImage storm_sheet = null;
     
     public BufferedImage[] block = new BufferedImage[2];
     public BufferedImage[] player = new BufferedImage[1];
     public BufferedImage[] plane = new BufferedImage[1];
+    public BufferedImage[] flyer = new BufferedImage[1];
+    public BufferedImage[] storm = new BufferedImage[1];
     
     public Texture(){
         
         BufferedImageLoader loader = new BufferedImageLoader();
         try {
-            block_sheet = loader.loadImage("/block_sheet.png");
+            block_sheet = loader.loadImage("/runway.png");
             player_sheet = loader.loadImage("/player_sheet.png");
             plane_sheet = loader.loadImage("/plane.png");
+            flyer_sheet = loader.loadImage("/flyer.png");
+            storm_sheet = loader.loadImage("/storm.png");
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -33,6 +39,8 @@ public class Texture {
         bs = new SpriteSheet(block_sheet);
         ps = new SpriteSheet(player_sheet);
         as = new SpriteSheet(plane_sheet);
+        fs = new SpriteSheet(flyer_sheet);
+        ss = new SpriteSheet(storm_sheet);
         getTextures();
     }
     
@@ -45,5 +53,7 @@ public class Texture {
          * for this one.
          */
         plane[0] = as.grabImage(1, 1, 251, 106);
+        flyer[0] = fs.grabImage(1, 1, 154, 106);
+        storm[0] = ss.grabImage(1, 1, 250, 255);
     }
 }

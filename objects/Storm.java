@@ -11,43 +11,41 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Hafiz
  */
-public class Player extends GameObject {
-
-    private float width = 48, height = 96;
+public class Storm extends GameObject {
     
-    private float gravity = 0.5f;
-    private final float MAX_SPEED = 10;
+    private float width = 250, height = 255;
+    
+    private float gravity = 0f;
+    private final float MAX_SPEED = 50;
+    private boolean isMovingForward = false;
     
     private Handler handler;
     private Camera cam;
     
     Texture tex = Game.getInstance();
     
-    public Player(float x, float y, Handler handler, Camera cam, ObjectId id){
+    public Storm(float x, float y, Handler handler, Camera cam, ObjectId id){
         super(x, y, id);
         this.handler = handler;
         this.cam = cam;
     }
     
-    @Override
-    public void tick(LinkedList<GameObject> object) {
-        x += velX;
-        y += velY;
-        
-        if(falling || jumping)
-        {
-            velY += gravity;
-            if(velY > MAX_SPEED)
-                velY = MAX_SPEED;
-        }
-        Collision(object);
+    public void setMotion(boolean b){
+        this.isMovingForward = b;
     }
     
+    @Override
+    public void tick(LinkedList<GameObject> object) {
+        Collision(object);
+    }
+       
     private void Collision(LinkedList<GameObject> object){
         for(int i = 0; i < handler.objects.size(); i++){
             GameObject tempObject = handler.objects.get(i);
@@ -79,16 +77,29 @@ public class Player extends GameObject {
             } else if(tempObject.getId() == ObjectId.Flag){
                 // Switch level (Or in our case, level has endeed)
                 if(getBounds().intersects(tempObject.getBounds())){
-                    handler.switchLevel();
+
                 }
             }
         }
     }
-
+    
+    // Where the plane is actually drawn onto the window
     @Override
-    public void render(Graphics g) {      
+    public void render(Graphics g) {
         g.setColor(Color.blue);
-        g.drawImage(tex.player[0], (int)x, (int)y, 48, 96, null);
+        
+        // Draws a big blue rectangle in case we need it
+//        g.fillRect((int)x, (int)y, (int)width, (int)height);
+        
+        g.drawImage(tex.storm[0], (int)x, (int)y, 250, 255, null);
+        
+//        // This shows our collision bounds
+//        Graphics2D g2d = (Graphics2D)g;
+//        g.setColor(Color.red);
+//        g2d.draw(getBounds());
+//        g2d.draw(getBoundsTop());
+//        g2d.draw(getBoundsRight());
+//        g2d.draw(getBoundsLeft());
     }
 
     @Override

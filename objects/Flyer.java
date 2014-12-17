@@ -16,22 +16,28 @@ import java.util.LinkedList;
  *
  * @author Hafiz
  */
-public class Player extends GameObject {
+public class Flyer extends GameObject {
 
-    private float width = 48, height = 96;
+    private float width = 251, height = 106;
     
-    private float gravity = 0.5f;
-    private final float MAX_SPEED = 10;
+    private float gravity = 0f;
+    private final float MAX_SPEED = 50;
+    private boolean isMovingForward = false;
     
     private Handler handler;
     private Camera cam;
     
     Texture tex = Game.getInstance();
     
-    public Player(float x, float y, Handler handler, Camera cam, ObjectId id){
+    public Flyer(float x, float y, Handler handler, Camera cam, ObjectId id){
         super(x, y, id);
+        this.setVelX(-10f);
         this.handler = handler;
         this.cam = cam;
+    }
+    
+    public void setMotion(boolean b){
+        this.isMovingForward = b;
     }
     
     @Override
@@ -45,9 +51,10 @@ public class Player extends GameObject {
             if(velY > MAX_SPEED)
                 velY = MAX_SPEED;
         }
+        
         Collision(object);
     }
-    
+        
     private void Collision(LinkedList<GameObject> object){
         for(int i = 0; i < handler.objects.size(); i++){
             GameObject tempObject = handler.objects.get(i);
@@ -84,11 +91,24 @@ public class Player extends GameObject {
             }
         }
     }
-
+    
+    // Where the plane is actually drawn onto the window
     @Override
-    public void render(Graphics g) {      
+    public void render(Graphics g) {
         g.setColor(Color.blue);
-        g.drawImage(tex.player[0], (int)x, (int)y, 48, 96, null);
+        
+        // Draws a big blue rectangle in case we need it
+//        g.fillRect((int)x, (int)y, (int)width, (int)height);
+        
+        g.drawImage(tex.flyer[0], (int)x, (int)y, 251, 106, null);
+        
+//        // This shows our collision bounds
+//        Graphics2D g2d = (Graphics2D)g;
+//        g.setColor(Color.red);
+//        g2d.draw(getBounds());
+//        g2d.draw(getBoundsTop());
+//        g2d.draw(getBoundsRight());
+//        g2d.draw(getBoundsLeft());
     }
 
     @Override
