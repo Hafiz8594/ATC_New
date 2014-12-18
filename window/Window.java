@@ -39,8 +39,6 @@ public class Window {
         frame.getContentPane().add(game);
         frame.getContentPane().add(statusBar, BorderLayout.PAGE_END);
         
-        JButton button = new JButton("Long-Named Button 4 (PAGE_END)");
-        JButton button2 = new JButton("Long-Named Button 4 (PAGE_END)");
         //frame.getContentPane().add(button, BorderLayout.PAGE_END);
         
         frame.pack();

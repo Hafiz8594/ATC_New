@@ -17,6 +17,10 @@ public class Handler {
     
     private GameObject tempObject;
     
+    public ScoreKeeper keeper;
+    
+    Plane plane;
+    
     private Camera cam;
     
     private BufferedImage level2 = null;
@@ -59,10 +63,13 @@ public class Handler {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
                 
-//                if(red == 255 & green == 255 && blue == 255) // Checks for blocks
-//                    addObject(new Block(xx*32, (yy+200)*32, 0, ObjectId.Block));
-                if(red == 0 & green == 38 && blue == 255) // Checks for plane
-                    addObject(new Plane(xx*32, yy*32, this, cam, ObjectId.Plane));
+                if(red == 255 & green == 255 && blue == 255) // Checks for blocks
+                    addObject(new Block(xx*32, (yy)*32, 0, ObjectId.Block));
+                if(red == 0 & green == 38 && blue == 255){ // Checks for plane
+                    plane = new Plane(xx*32, yy*32, this, cam, ObjectId.Plane);
+                    addObject(plane);
+                    this.keeper = new ScoreKeeper(plane);
+                }
                 if(red == 255 & green == 0 && blue == 110) // Checks for Flyer
                     addObject(new Flyer(xx*32, yy*32, this, cam, ObjectId.Flyer));
                 if(red == 255 & green == 106 && blue == 0) // Checks for Storm
@@ -72,7 +79,7 @@ public class Handler {
             }
         }
     }
-    
+       
     public void switchLevel(){
         clearLevel();
         cam.setX(0);
@@ -80,8 +87,9 @@ public class Handler {
         switch(Game.LEVEL)
         {
             case 1:
-                loadImageLevel(level2);
-                break;
+                System.exit(0);
+
+                //break;
         }
         
         Game.LEVEL++;

@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 
     private boolean running = false;
     private Thread thread;
-    
+    private ScoreKeeper keeper;
 
     @Override
     public Dimension size() {
@@ -59,7 +59,6 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler(cam);
         
         handler.loadImageLevel(level);
-        
         /**
          * This is where objects are added to the game the the
          * createLevel() method is called to populate the level
@@ -151,7 +150,7 @@ public class Game extends Canvas implements Runnable {
         g.dispose();
         bs.show();
     }
-    
+
     public static Texture getInstance(){
         return tex;
     }
